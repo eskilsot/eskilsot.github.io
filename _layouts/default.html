@@ -1,20 +1,51 @@
 <!DOCTYPE html>
-	<html>
-		<head>
-			<title>{{ page.title }}</title>
-			<!-- link to main stylesheet -->
-			<link rel="stylesheet" type="text/css" href="/css/main.css">
-		</head>
-		<body>
-			<div class="container">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/konpa/devicon@df6431e323547add1b4cf45992913f15286456d3/devicon.min.css">
+
+<html lang="en">
+<head>
+<style>
+h1 {text-align: center;}
+img {
+	display: block;
+	margin-left: auto;
+	margin-right: auto;
+	max-width: 75%;
+	}
+figure figcaption {
+	text-align: center;
+	margin-left: auto;
+	margin-right: auto;
+	max-width: 50%;
+	}
+iframe {
+	display: block;
+	margin-left: auto;
+	margin-right: auto;
+	max-width: 75%;
+	}
+
+</style>
+</head>
+	{% include head.html %}
+	<body>
+		{% include header.html %}
+		<section id="about">
+			{% include about.html %}
 			
+		<h2>Project List</h2>
+		<p> Follow the links below to learn more about some of my projects:
+		<ul>
+			<li><a href="#motorController">Motor Controller</a></li>
+			<li><a href="#eTrain">UMSAE eTrain Lead</a></li>
+		</ul>
+		</p>
+		
+		<section id="motorController">
+			{% include motorController.html %}
+		<section id="eTrain">
+			{% include eTrain.html %}
+		</section>
 			{{ content }}
-			
-			</div><!-- /.container -->
-			<footer>
-	    		<ul>
-	        		<li><a Email: href="mailto:troyeskil@gmail.com">troyeskil@gmail.com</a></li>
-				</ul>
-			</footer>
-		</body>
-	</html>
+			{% include footer.html %}
+	</body>
+</html>

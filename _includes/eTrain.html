@@ -1,0 +1,30 @@
+<div class="project">
+	<h1>UMSAE eTrain System Lead</h1>
+	<p>July 2019 - Present</P>
+	<p>As the eTrain lead, I am responsible for the high level design decisions of the vehicle related to the motor, motor controller, and accumulator. </p>
+	<h2>Custom Laptime Simulator</h2>
+	<h3>Motivation</h3>
+	<p>In order to evaluate the ideal motor choice and pack capacity, and to quantify the importance of vehicle parameters such as aerodynamics, a laptime simulator was used. I made a custom laptime simulator using python (and version controlled through github) to develop the simulations. This custom simulator allowed for complete control over the simulation, and allowed for easy automation of simulations, compared to commercial laptime simulators.</p>
+	<h3>Features</h3>
+	<p>The program was built using python, as it was free for the team to use, and had features that made the program easier to write and understand. The programs supports multiple vehicles and tracks. The vehicle parameters are imported in csv files which are easily editable, and the format for track data allows accelerometer data to be used (with the help of an online converter). The program can perform a sweep of any vehicle parameters, across multiple vehicles, and any track. Vehicle variables (such as velocity and acceleration) can be viewed over the duration of a lap. The laptime data can also be converted to a competition score</p>
+	<h3>Results</h3>
+	<p>One of the first simulations run were to determine the ideal motor and gearing ratio. Using the program, lap times for multiple motors across different gear ratios could be easily compared, as seen below.
+	</p>
+	<figure>
+		<img src="images/208_228_aero_gearingComparison.png" alt="Gear ratio sweep" width="{{site.std_width}}" border="20">
+		<figcaption>Gear ratio sweep on acceleration track.</figcaption>
+	</figure>
+	<p>As mentioned previously, the laptime simulations would be able to estimate how sensitive the vehicle performance would be to various parameters. This allows to team to determine the best use of resources. The results of these simulations can be found below.</p>
+	<figure>
+		<img src="images/Sensitivity_Analysis_v2.png" alt="Sensitivty analysis results" width="{{site.std_width}}" border="20">
+		<figcaption>Sensitivty analysis results.</figcaption>
+	</figure>
+	<p>Given the laptimes of vehicles across the competition tracks, the data can be converted into competition scores. This quantifies changes in vehicle performance, and helps answer questions such as "How useful is an aero package?", "How beneficial would 4-wheel drive be?", and "What motor/controller combinations is best?". Results from these runs be found below.</p>
+	<figure>
+		<img src="images/compSimResults.png" alt="Competition simulation results" width="{{site.std_width}}" border="20">
+		<figcaption>Competition simulation results.</figcaption>
+	</figure>
+	<h3>Report</h3>
+	<p>The full report is available online <a href="https://github.com/eskilsot/Portfolio/blob/master/Laptime_Simulator_Report.pdf"> here</a>.</p>
+	
+</div>

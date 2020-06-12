@@ -1,0 +1,93 @@
+<div class="project">
+	<h1>Motor Controller Prototype</h1>
+	<p>I was part of a group of four people who designed and built a motor controller as our final year capstone project. It was designed for the UMSAE Formula Electric vehicle. Members of the capstone group were highly involved with the team, and were excited to take on this task. For the project, we recieved two awards: the ECE Capstone 2019-2020 IEEE 3rd Place Award, and the 2020 IEEE YP Capstone Award. An image of the device, and a video of it working are found below.</p>
+	<figure>
+		<img src="images/mc_assembly_v2.jpg" alt="Motor controller prototype" width="{{site.std_width}}" border="20">
+		<figcaption>Image of the assembled motor controller prototype.</figcaption>
+	</figure>
+	
+	<figure>
+		<iframe width="420" height="315"
+			src="https://www.youtube.com/embed/6sqrHqA8sUE">
+		</iframe> 
+		<figcaption>Video of the motor controller in action.</figcaption>
+	</figure>
+	
+	<h2>Motivation</h2>
+		<p>There are several major reasons why the UMSAE Formula Electric team was interested in a custom, team-designed motor controller. Firstly, off-the-shelf products are very expensive. The currently used motor controller cost around $9000, while it was estimated that the team could build one for only $2500. Secondly, the motor controller was largely a black box, and nobody on the team knew how it worked. Building a custom controller would require a solid understanding of the device at all levels, and having this knowledge on the team would directly improve team performance. Thirdly, the layout of a custom controller is much more flexible than that of a purchased part. Lastly, the team exists to provide students with a learning experience, as a custom motor controller offers design experience in control systems, power electronics, PCB design, and embedded systems.
+		</p>
+	<h2>Key Deign Features</h2>
+	<p>
+	 <ul>
+		<li>Field oriented control</li>
+		<li>Torque control of motor</li>
+		<li>16kHz switching frequency</li>
+		<li>16kHz current control loop frequency</li>
+		<li> Resolver position feedback</li>
+		<li>6-pack IGBT module</li>
+		<li>Overcurrent protection</li>
+		<li>Overtemperature proteciton</li>
+		<li>GUI capable of logging variables and changing control parameters</li>
+		<li>Fully FSAE rules compliant design</li>
+	</ul> 
+	</p>
+	<h2>Design</h2>
+	<p>The project consisted of the design of all electrical aspects of a motor controller. This included designing the control system, 3 custom PCBs, and writing all the embedded and GUI code. I was responsible for the control system and power electronics.
+	</p>
+	<p>The control system was designed and simulated with the Simulink addon for MATLAB. The simulation model was used to verify the control system parameters, and the required resolution for the sensors and ADCs. The controller was tested across a range of velocities and torques. Some of these simulation results can be seen below. 
+	</p>
+	<figure>
+		<img src="images/bw_1600_controller_v2.png" alt="Simulink bandwidth tuning results" width="{{site.std_width}}" border="20">
+		<figcaption>Simulink bandwidth tuning results. The measured torque (pink) closely follows the requested torque (green). The offset was due to the measurement method when the motor was accelerating.</figcaption>
+	</figure>
+	<p>The hardware for the project consisted of 3 PCBs: the control PCB (a 4-layer board containing the microcontroller and its direct interfaces), the gate driver PCB (a 4-layer board mounted to the IGBT module, containing the gate driving and some measurement circuitry), and the current sensor PCB (a 2-layer board containing differential ADCs for measuring the phase current through hall effect sensors). Images of the PCBs can be found below.
+	</P>
+	<figure>
+		<img src="images/controlPCB_clean.png" alt="Gate driver PCB" width="100%" border="20">
+		<figcaption>Image of the control PCB.</figcaption>
+	</figure>
+	<figure>
+		<img src="images/gateDriverPCB_clean.png" alt="Gate driver PCB" width="100%" border="20">
+		<figcaption>Image of the gate driver PCB.</figcaption>
+	</figure>
+	<figure>
+		<img src="images/currentSense_small_v2.jpg" alt="Current sense PCB" width="{{site.std_width}}" border="20">
+		<figcaption>Image of the current sense PCB.</figcaption>
+	</figure>
+	<p>The current sense PCB was designed after the motor controller was tested. Orignally, shunt resistors were used to measure current, however there was too much noise on these measurements when the motor controller was switching. In order to minimize the signal noise on the new PCB, the differential ADCs were located as close as possible to the current sensors. The sensors themselves were moved further awar from the IGBT module. The measurements were also all triggered to start conversion at the same time, at the start of the PWM cycle.
+	</p>
+	<h2>Testing</h2>
+	<p>Below are some of the results from testing. The first time we spun the motor, we noticed some interesting features in the logs. There was a large ripple in the phase current.</p>
+	<figure>
+		<img src="images/currentRippleLogs.png" alt="Current ripple from log" width="{{site.std_width}}" border="20">
+		<figcaption>Current ripple logged through the GUI.</figcaption>
+	</figure>
+	<p>Investigating further through the logs, we discovered a large ripple in the DC bus voltage measurement. The ripples in the two measurements lined up, indicating this was the problem.</P>
+	<figure>
+		<img src="images/vdc_ripple_logs.png" alt="DC voltage measurement ripple" width="{{site.std_width}}" border="20">
+		<figcaption>DC voltage measurement ripple.</figcaption>
+	</figure>
+	<p>The ripple in the measurement was caused by an improperly tuned RC filter. When corrected, the measurment was significantly improved, and the current waveform was improved.</P>
+	<figure>
+		<img src="images/vdc_smallRipple.png" alt="DC voltage measurement after correction" width="{{site.std_width}}" border="20">
+		<figcaption>DC voltage measurement after filter correction.</figcaption>
+	</figure>
+	<figure>
+		<img src="images/sinusoidalCurrents.png" alt="Current ripple from after correction" width="{{site.std_width}}" border="20">
+		<figcaption>Phase current measurements after filter correction.</figcaption>
+	</figure>
+	
+	<p>We used an oscilloscope to verify that the device was operating properly, before running higher power tests.</p>
+	<figure>
+		<img src="images/scope_79.png" alt="Oscilloscope capture of motor controller" width="100%" border="20">
+		<figcaption>Oscilloscope capture of motor controller during operation. The voltages of the three phases are shown, along with the phase A current (in pink).</figcaption>
+	</figure>
+	<p>One of the requirements for the project was the operating speed of the motor. The controller had to be able to drive the motor at its maximum speed, limited be the DC voltage. The target for the test was 3000 RPM. </p>
+	<figure>
+		<img src="images/speedTest_rpm.png" alt="Speed test results" width="{{site.std_width}}" border="20">
+		<figcaption>Speed test results.</figcaption>
+	</figure>
+	<h2>Full Report</h2>
+	<p>The full final report is available online <a href="https://github.com/eskilsot/Portfolio/blob/master/G13_Final_Report_V3.pdf">here</a>.</p>
+	
+</div>
